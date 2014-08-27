@@ -1,0 +1,12 @@
+**** 	http://nodejsdb.org/db-mysql/ (connect + insert+ update+ delete)\
+
+
+/*** grid panel 
+http://dev.sencha.com/deploy/ext-4.0.1/examples/grid/array-grid.html
+
+
+
+validation : 	http://www.mysamplecode.com/2012/03/extjs-validate-form-fields-vtype.html
+
+refresh grid after dletee data :
+http://stackoverflow.com/questions/5815497/extjs-gridpanel-store-refresh
