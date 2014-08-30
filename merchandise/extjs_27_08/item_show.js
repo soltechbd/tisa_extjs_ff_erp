@@ -32,6 +32,10 @@ grid.getStore().reload({
 */
 
 
+function doMin() {
+    this.collapse(false);
+    this.alignTo(document.body, 'bl-bl');
+}
 
 
 /* === window for item === */
@@ -143,7 +147,10 @@ function SHOWALL() {
             editor: {
                 // defaults to textfield if no xtype is supplied
                 allowBlank: false
-            }
+            },
+
+
+
         }, {
             header: 'Item Description',
             dataIndex: 'item_description',
@@ -153,7 +160,9 @@ function SHOWALL() {
             editor: {
                 // defaults to textfield if no xtype is supplied
                 allowBlank: false
-            }
+            },
+
+
         }, {
             header: 'Item Type',
             dataIndex: 'item_type_name',
@@ -183,6 +192,7 @@ function SHOWALL() {
                 listeners: {
                     change: {
                         fn: function(combo, value) {
+
 
                             var v = combo.getValue();
                             var record = combo.findRecord(combo.valueField || combo.displayField, v);
@@ -410,7 +420,9 @@ function SHOWALL() {
             handler: function() {
                 grid.getStore().load();
 
-                Ext.MessageBox.alert('Message', 'Refresh Panel');
+
+
+                Ext.MessageBox.alert('Message', 'Updated Store');
             }
         }]
 
@@ -461,6 +473,8 @@ function SHOWALL() {
 
     });
 
+    allItemShow.on('minimize', doMin, allItemShow);
+
 
 
 }
@@ -473,6 +487,6 @@ function storePuck() {
     var json = Ext.encode(Ext.pluck(grid.getStore().data.items, 'data'));
     console.log(Ext.encode(Ext.pluck(grid.getStore().data.items, 'data')));
 
-    socket.emit('all_store_item', json);
+    socket.emit('all_order_list', json);
 
 }

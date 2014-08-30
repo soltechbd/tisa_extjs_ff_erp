@@ -5,40 +5,40 @@
     //src: url('fonts/impact.ttf');
 
 }
+.some-class {
+    text-align: center;
+}
 .welcome {
     width: 35%;
     margin: 3% auto;
     text-align: center;
 }
-#inTurnFadingTextG {
-    width: 683px;
-}
 .inTurnFadingTextG {
-    color: #4DBBE3;
-    font-family: "impact";
+    color: #04A0D9;
+    font-family: Impact;
     font-size: 25px;
     text-decoration: none;
     font-weight: normal;
     font-style: normal;
     float: left;
     -moz-animation-name: bounce_inTurnFadingTextG;
-    -moz-animation-duration: 4.16s;
+    -moz-animation-duration: 4.68s;
     -moz-animation-iteration-count: infinite;
     -moz-animation-direction: linear;
     -webkit-animation-name: bounce_inTurnFadingTextG;
-    -webkit-animation-duration: 4.16s;
+    -webkit-animation-duration: 4.68s;
     -webkit-animation-iteration-count: infinite;
     -webkit-animation-direction: linear;
     -ms-animation-name: bounce_inTurnFadingTextG;
-    -ms-animation-duration: 4.16s;
+    -ms-animation-duration: 4.68s;
     -ms-animation-iteration-count: infinite;
     -ms-animation-direction: linear;
     -o-animation-name: bounce_inTurnFadingTextG;
-    -o-animation-duration: 4.16s;
+    -o-animation-duration: 4.68s;
     -o-animation-iteration-count: infinite;
     -o-animation-direction: linear;
     animation-name: bounce_inTurnFadingTextG;
-    animation-duration: 4.16s;
+    animation-duration: 4.68s;
     animation-iteration-count: infinite;
     animation-direction: linear;
 }
@@ -238,9 +238,37 @@
     -o-animation-delay: 4.03s;
     animation-delay: 4.03s;
 }
+#inTurnFadingTextG_29 {
+    -moz-animation-delay: 4.16s;
+    -webkit-animation-delay: 4.16s;
+    -ms-animation-delay: 4.16s;
+    -o-animation-delay: 4.16s;
+    animation-delay: 4.16s;
+}
+#inTurnFadingTextG_30 {
+    -moz-animation-delay: 4.29s;
+    -webkit-animation-delay: 4.29s;
+    -ms-animation-delay: 4.29s;
+    -o-animation-delay: 4.29s;
+    animation-delay: 4.29s;
+}
+#inTurnFadingTextG_31 {
+    -moz-animation-delay: 4.42s;
+    -webkit-animation-delay: 4.42s;
+    -ms-animation-delay: 4.42s;
+    -o-animation-delay: 4.42s;
+    animation-delay: 4.42s;
+}
+#inTurnFadingTextG_32 {
+    -moz-animation-delay: 4.55s;
+    -webkit-animation-delay: 4.55s;
+    -ms-animation-delay: 4.55s;
+    -o-animation-delay: 4.55s;
+    animation-delay: 4.55s;
+}
 @-moz-keyframes bounce_inTurnFadingTextG {
     0% {
-        color: #4DBBE3;
+        color: #04A0D9;
     }
     100% {
         color: #FFFFFF;
@@ -248,7 +276,7 @@
 }
 @-webkit-keyframes bounce_inTurnFadingTextG {
     0% {
-        color: #4DBBE3;
+        color: #04A0D9;
     }
     100% {
         color: #FFFFFF;
@@ -256,7 +284,7 @@
 }
 @-ms-keyframes bounce_inTurnFadingTextG {
     0% {
-        color: #4DBBE3;
+        color: #04A0D9;
     }
     100% {
         color: #FFFFFF;
@@ -264,7 +292,7 @@
 }
 @-o-keyframes bounce_inTurnFadingTextG {
     0% {
-        color: #4DBBE3;
+        color: #04A0D9;
     }
     100% {
         color: #FFFFFF;
@@ -272,7 +300,7 @@
 }
 @keyframes bounce_inTurnFadingTextG {
     0% {
-        color: #4DBBE3;
+        color: #04A0D9;
     }
     100% {
         color: #FFFFFF;

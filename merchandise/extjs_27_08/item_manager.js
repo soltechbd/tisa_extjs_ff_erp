@@ -1,13 +1,10 @@
 function item_manager() {
 
-
-
-
     socket = io.connect("http://192.168.0.104:81");
 
     /* Item Type part */
 
-    socket.emit('initialization', ""); // Asking server for unit type
+    //socket.emit('initialization', ""); // Asking server for unit type
 
     socket.on('item_type_input', function(it) {
 
@@ -89,20 +86,66 @@ function SHOW() {
 }
 
 
+
+
+
 /* === window for item === */
 
 function SetFORM() {
 
     ItemManagerWindow = Ext.create('Ext.window.Window', {
-        title: 'Item Manger Window',
+        title: 'Item Manager Window',
+        id: 'window',
         height: 400,
-        width: 400,
+        width: 500,
         layout: 'fit',
         // closable: true,
         collapsible: true,
         animCollapse: true,
         maximizable: true,
+        // minimizable: true,
+
+
+
         minimizable: true,
+        listeners: {
+            "minimize": function(window, opts) {
+                window.collapse();
+                window.setWidth(200);
+                window.alignTo(Ext.getBody(), 'bl-bl')
+            },
+
+
+            beforeclose: function() {
+                var me = this;
+                if (!me.askForConfirm) {
+                    me.askForConfirm = true;
+                    Ext.Msg.alert('Confirm', 'Do you really want to close window?', function(btn, text) {
+                        if (btn == 'ok') {
+                            me.close();
+                        } else {
+                            //me.show();
+                        }
+                        delete me.askForConfirm;
+                    });
+                    return false;
+                }
+                return true;
+            }
+
+
+
+        },
+        tools: [{
+            type: 'restore',
+            handler: function(evt, toolEl, owner, tool) {
+                var window = owner.up('window');
+                window.setWidth(500);
+                window.expand('', false);
+                window.center();
+            }
+        }],
+
         closeAction: 'hide',
 
         resizable: true,
@@ -112,13 +155,28 @@ function SetFORM() {
         items: {
 
             xtype: 'form',
-            padding: 10,
+            padding: 20,
             items: [{
                     xtype: 'textfield',
                     name: 'itemname',
                     id: 'itemname',
+
                     fieldLabel: 'Item Name',
+                    filedAlign: 'top',
                     allowBlank: false,
+
+                    width: 400,
+                    padding: '5 0 5 0',
+                    labelWidth: 140,
+                    labelAlign: 'left',
+                    labelStyle: 'text-align:left;border solid 1px white;',
+                    labelSeparator: '',
+                    emptyText: 'Give item name...',
+                    labelClsExtra: 'some-class',
+                    fieldStyle: 'text-align: left;font-size: 12px;',
+
+
+                    autoScroll: true,
 
                     listeners: {
                         specialkey: function(f, e) {
@@ -143,6 +201,18 @@ function SetFORM() {
                     fieldLabel: 'Item Description',
                     allowBlank: false,
 
+                    width: 400,
+                    labelWidth: 140,
+                    labelAlign: 'left',
+                    labelSeparator: '',
+                    emptyText: 'Give item description...',
+                    labelClsExtra: 'some-class',
+                    fieldStyle: 'text-align: left;font-size: 12px;',
+
+
+                    autoScroll: true,
+
+
                     listeners: {
                         specialkey: function(f, e) {
                             if (e.getKey() == e.ENTER) {
@@ -161,6 +231,19 @@ function SetFORM() {
                     id: 'itemTypeName',
                     fieldLabel: 'Item Type',
                     allowBlank: false,
+
+                    width: 400,
+                    labelWidth: 140,
+                    labelAlign: 'left',
+                    labelSeparator: '',
+                    emptyText: 'Select item type...',
+                    labelClsExtra: 'some-class',
+                    fieldStyle: 'text-align: left;font-size: 12px;',
+
+
+                    autoScroll: true,
+
+
                     queryMode: 'local',
                     displayField: 'item_type_name',
                     // displayField: 'item_type_status',
@@ -200,6 +283,17 @@ function SetFORM() {
                     id: 'unitTypeName',
                     fieldLabel: 'Unit Type',
                     allowBlank: false,
+
+                    width: 400,
+                    labelWidth: 140,
+                    labelAlign: 'left',
+                    labelSeparator: '',
+                    emptyText: 'Select unit type...',
+                    labelClsExtra: 'some-class',
+                    fieldStyle: 'text-align: left;font-size: 12px;',
+
+
+                    autoScroll: true,
                     queryMode: 'local',
                     displayField: 'unit_type_name',
                     valueField: 'id',
@@ -243,6 +337,17 @@ function SetFORM() {
                     id: 'colorName',
                     fieldLabel: 'Item Color',
                     allowBlank: false,
+
+                    width: 400,
+                    labelWidth: 140,
+                    labelAlign: 'left',
+                    labelSeparator: '',
+                    emptyText: 'Select item color...',
+                    labelClsExtra: 'some-class',
+                    fieldStyle: 'text-align: left;font-size: 12px;',
+
+
+                    autoScroll: true,
                     queryMode: 'local',
                     displayField: 'color_type_name',
                     valueField: 'id',
@@ -289,6 +394,17 @@ function SetFORM() {
                     id: 'supplierName',
                     fieldLabel: 'Item Supplier',
                     allowBlank: false,
+
+                    width: 400,
+                    labelWidth: 140,
+                    labelAlign: 'left',
+                    labelSeparator: '',
+                    emptyText: 'Select supplier...',
+                    labelClsExtra: 'some-class',
+                    fieldStyle: 'text-align: left;font-size: 12px;',
+
+
+                    autoScroll: true,
                     queryMode: 'local',
                     displayField: 'supplier_name',
                     valueField: 'id',
@@ -333,6 +449,17 @@ function SetFORM() {
                     fieldLabel: 'Comment',
                     allowBlank: false,
 
+                    width: 400,
+                    labelWidth: 140,
+                    labelAlign: 'left',
+                    labelSeparator: '',
+                    emptyText: 'Put comment...',
+                    labelClsExtra: 'some-class',
+                    fieldStyle: 'text-align: left;font-size: 12px;',
+
+
+                    autoScroll: true,
+
                     listeners: {
 
                         specialkey: function(f, e) {
@@ -353,8 +480,9 @@ function SetFORM() {
 
 
                         blur: function() {
-                            //  this.store.removeAll();
-                            //  this.store.reload();
+                            //this.store.removeAll();
+                            // this.store.reload();
+                            // this.up('form').getForm().reset();
                         }
                     }
 
@@ -386,6 +514,8 @@ function SetFORM() {
                 formBind: true, //only enabled once the form is valid
                 //disabled: false,
 
+
+
                 handler: function() {
 
                     var panel = this.up('form');
@@ -398,6 +528,7 @@ function SetFORM() {
                     if (form.isValid()) {
 
                         submitToNode();
+                        this.up('form').getForm().reset();
 
                         Ext.MessageBox.alert('success', 'Successfully data inserted');
 
@@ -439,16 +570,23 @@ function SetFORM() {
             } // getInvalidFields function end  
 
 
+
+
+
         }
     })
 
+
+
 }
 
-var reloadStoreFunction;
+
+
+/*var reloadStoreFunction;
 Ext.TaskManager.start({
     run: reloadStoreFunction,
     interval: 100
-});
+});*/
 
 function submitToNode() {
 
@@ -507,9 +645,6 @@ function submitToNode() {
 
         SUB.colors.new_color_found = false;
     }
-
-
-
 
     SUB.colors.value = Ext.getCmp('colorName').getValue();
 

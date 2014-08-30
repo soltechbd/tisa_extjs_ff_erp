@@ -9,12 +9,14 @@
 
     //var allItemShow;
     //var allUnitshow();
+    // var SHOW_order;
 
 
 
     Ext.onReady(function() {
         item_manager();
         item_show();
+        //order_manager();
         // unit_show();
         // color_show();
     });

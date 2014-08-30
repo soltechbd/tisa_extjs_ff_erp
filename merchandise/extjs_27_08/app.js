@@ -5,13 +5,18 @@
     var ItemSupplier;
 
     var ItemManagerWindow;
-    // var storePuck;
 
-    //var allItemShow;
-
+    var OrderManagerWindow;
+    var OrderItemView;
 
 
     Ext.onReady(function() {
         item_manager();
         item_show();
+        order_manager();
+        order_item_show();
+
+
+
+
     });

@@ -32,6 +32,10 @@ grid.getStore().reload({
 */
 
 
+function doMin() {
+    this.collapse(false);
+    this.alignTo(document.body, 'bl-bl');
+}
 
 
 /* === window for item === */
@@ -414,7 +418,7 @@ function SHOWALL() {
         }, {
             text: 'Reload Store',
             handler: function() {
-                // grid.getStore().load();
+                grid.getStore().load();
 
 
 
@@ -468,6 +472,8 @@ function SHOWALL() {
         }
 
     });
+
+    allItemShow.on('minimize', doMin, allItemShow);
 
 
 

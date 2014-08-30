@@ -11,6 +11,7 @@
 
     <script type="text/javascript" src="item_manager.js"></script>
     <script type="text/javascript" src="item_show.js"></script>
+    <!--script type="text/javascript" src="order_manager.js"></script-->
     <!--script type="text/javascript" src="unit_show.js"></script>
     <script type="text/javascript" src="color_show.js"></script-->
     <script type="text/javascript" src="app.js"></script>
@@ -37,7 +38,7 @@
     <div class="button_div">
         <ul>
             <li>
-                <input type="button" onclick="SHOW()" value="Add Item" class="button" />
+                <input type="button" onclick="SHOW()" value="Item Manager" class="button" />
             </li>
             <li>
                 <input type="button" onclick="SHOW_item_type()" value="All Item" class="button" />
@@ -51,6 +52,12 @@
             <li>
                 <input type="button" onclick="SHOW_supplier()" value="All Supplier" class="button" />
             </li>
+
+            <li>
+                <!--                <input type="button" onclick="SHOW_order" value="Order Manager" class="button" />-->
+            </li>
+
+
             <!--li>
                 <input type="button" onclick="row_edit()" value="Row Edit" class="button" />
             </li-->

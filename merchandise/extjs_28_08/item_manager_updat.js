@@ -171,9 +171,9 @@ function SetFORM() {
                     labelAlign: 'left',
                     labelStyle: 'text-align:left;border solid 1px white;',
                     labelSeparator: '',
-                    emptyText: 'Give item name...',
+                    emptyText: 'Item name',
                     labelClsExtra: 'some-class',
-                    fieldStyle: 'text-align: left;font-size: 12px;',
+                    fieldStyle: 'text-align: left;',
 
 
                     autoScroll: true,
@@ -205,9 +205,9 @@ function SetFORM() {
                     labelWidth: 140,
                     labelAlign: 'left',
                     labelSeparator: '',
-                    emptyText: 'Give item description...',
+                    emptyText: 'Item Description',
                     labelClsExtra: 'some-class',
-                    fieldStyle: 'text-align: left;font-size: 12px;',
+                    fieldStyle: 'text-align: left;',
 
 
                     autoScroll: true,
@@ -236,9 +236,9 @@ function SetFORM() {
                     labelWidth: 140,
                     labelAlign: 'left',
                     labelSeparator: '',
-                    emptyText: 'Select item type...',
+                    emptyText: 'Item Type',
                     labelClsExtra: 'some-class',
-                    fieldStyle: 'text-align: left;font-size: 12px;',
+                    fieldStyle: 'text-align: left;',
 
 
                     autoScroll: true,
@@ -288,9 +288,9 @@ function SetFORM() {
                     labelWidth: 140,
                     labelAlign: 'left',
                     labelSeparator: '',
-                    emptyText: 'Select unit type...',
+                    emptyText: 'Unit Type',
                     labelClsExtra: 'some-class',
-                    fieldStyle: 'text-align: left;font-size: 12px;',
+                    fieldStyle: 'text-align: left;',
 
 
                     autoScroll: true,
@@ -342,9 +342,9 @@ function SetFORM() {
                     labelWidth: 140,
                     labelAlign: 'left',
                     labelSeparator: '',
-                    emptyText: 'Select item color...',
+                    emptyText: 'Item Color',
                     labelClsExtra: 'some-class',
-                    fieldStyle: 'text-align: left;font-size: 12px;',
+                    fieldStyle: 'text-align: left;',
 
 
                     autoScroll: true,
@@ -399,9 +399,9 @@ function SetFORM() {
                     labelWidth: 140,
                     labelAlign: 'left',
                     labelSeparator: '',
-                    emptyText: 'Select supplier...',
+                    emptyText: 'Item Supplier',
                     labelClsExtra: 'some-class',
-                    fieldStyle: 'text-align: left;font-size: 12px;',
+                    fieldStyle: 'text-align: left;',
 
 
                     autoScroll: true,
@@ -453,9 +453,9 @@ function SetFORM() {
                     labelWidth: 140,
                     labelAlign: 'left',
                     labelSeparator: '',
-                    emptyText: 'Put comment...',
+                    emptyText: 'Comment',
                     labelClsExtra: 'some-class',
-                    fieldStyle: 'text-align: left;font-size: 12px;',
+                    fieldStyle: 'text-align: left;',
 
 
                     autoScroll: true,
@@ -528,7 +528,7 @@ function SetFORM() {
                     if (form.isValid()) {
 
                         submitToNode();
-                        form.getForm().reset();
+                        this.up('form').getForm().reset();
 
                         Ext.MessageBox.alert('success', 'Successfully data inserted');
 

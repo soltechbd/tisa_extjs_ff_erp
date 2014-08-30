@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>ERP- Marchendise</title>
+    <title>ERP- Merchandise</title>
     <link rel="stylesheet" type="text/css" href="http://192.168.0.106/merchandise/ext_js/build/packages/ext-theme-access\build\resources/ext-theme-access-all.css">
     <script src="http://192.168.0.104:81/socket.io/socket.io.js"></script>
     <script type="text/javascript" src="http://192.168.0.106/merchandise/ext_js/build//ext-all.js"></script>
@@ -11,9 +11,9 @@
 
     <script type="text/javascript" src="item_manager.js"></script>
     <script type="text/javascript" src="item_show.js"></script>
-    <!--script type="text/javascript" src="order_manager.js"></script-->
-    <!--script type="text/javascript" src="unit_show.js"></script>
-    <script type="text/javascript" src="color_show.js"></script-->
+    <script type="text/javascript" src="order_manager.js"></script>
+    <script type="text/javascript" src="unit_show.js"></script>
+    <script type="text/javascript" src="order_item_show.js"></script>
     <script type="text/javascript" src="app.js"></script>
 
 
@@ -54,7 +54,7 @@
             </li>
 
             <li>
-                <!--                <input type="button" onclick="SHOW_order" value="Order Manager" class="button" />-->
+                <input type="button" onclick="SHOW_order()" value="Order Manager" class="button" />
             </li>
 
 
