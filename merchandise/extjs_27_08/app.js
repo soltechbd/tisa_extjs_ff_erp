@@ -4,17 +4,17 @@
     var ItemColor;
     var ItemSupplier;
 
-    var ItemManagerWindow;
+    var AddItemWindow;
 
     var OrderManagerWindow;
     var OrderItemView;
 
 
     Ext.onReady(function() {
+        connect_for_item();
         item_manager();
-        item_show();
-        order_manager();
-        order_item_show();
+        connect_for_order();
+        // order_item_show();
 
 
 

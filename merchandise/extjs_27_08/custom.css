@@ -365,3 +365,7 @@
     /* Webkit (Safari/Chrome 10) */
     background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #40D1F5), color-stop(1, #449ABF));
 }
+.x-grid-cell.inner {
+    text-align: center;
+    !important;
+}

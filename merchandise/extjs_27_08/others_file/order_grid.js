@@ -1,0 +1,389 @@
+    Ext.define('ORDERITEM', {
+        extend: 'Ext.data.Model',
+        fields: [{
+            name: 'id',
+            type: 'int'
+        }, {
+            name: 'item_name',
+            type: 'string'
+        }, {
+            name: 'item_description',
+            type: 'string'
+        }, {
+            name: 'Qty_pcs',
+            type: 'string'
+        }, {
+            name: 'color',
+            type: 'string'
+        }, {
+            name: 'Qty',
+            type: 'string'
+        }, {
+            name: 'supplier',
+            type: 'string'
+        }, {
+            name: 'Extra',
+            type: 'string'
+        }]
+    });
+
+    Ext.define('ORDERITEMS', {
+        extend: 'Ext.data.Store',
+
+        //best to require the model if you  put it in separate files
+        requires: ['ORDERITEM'],
+        model: 'ORDERITEM',
+        storeId: 'OrderStore',
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'json',
+                root: 'items'
+            }
+        }
+    });
+
+    var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
+        clicksToEdit: 1,
+        autoCancel: true
+    });
+
+    OrderGrid = Ext.create('Ext.grid.Panel', {
+        itemId: 'OrderStoreGrid',
+        store: {
+            proxy: {
+                type: 'ajax',
+                url: 'http://192.168.0.104:81/item_list'
+            },
+            autoLoad: true,
+            autoSync: true,
+            // requires: ['ORDERITEM'],
+            model: 'ORDERITEM',
+        },
+
+
+
+        loadMask: true,
+        width: 400,
+        viewConfig: {
+            emptyText: 'No records'
+        },
+        plugins: [cellEditing],
+
+        columns: [{
+                xtype: 'rownumberer',
+                header: 'SL',
+                dataIndex: 'id',
+                width: 32,
+                sortable: false,
+                locked: true,
+                flex: 1,
+                editor: {
+                    // defaults to textfield if no xtype is supplied
+                    allowBlank: false
+                }
+
+            }, {
+                header: 'Item Name',
+                dataIndex: 'item_name',
+                width: 30,
+                flex: 1,
+                field: {
+                    xtype: 'combobox',
+                    typeAhead: true,
+                    triggerAction: 'all',
+                    selectOnTab: true,
+
+                    displayField: 'item_name',
+                    valueField: 'item_name',
+
+
+                    typeAhead: true,
+                    selectOnTab: true,
+
+                    store: {
+                        fields: ['item_name', 'id'],
+                        proxy: {
+                            type: 'ajax',
+                            url: 'http://192.168.0.104:81/itemdes_list'
+                        },
+                    },
+
+
+                    lazyRender: true,
+                    listClass: 'x-combo-list-small',
+                    listeners: {
+
+                        render: function(w) {
+                            Ext.Ajax.request({
+                                url: 'http://192.168.0.104:81/itemdes_list',
+                                timeout: 60000,
+                                method: 'GET',
+                                scope: this,
+                                success: function(resp) {
+                                    console.log(resp.responseText);
+
+                                    var OrderStore;
+                                    var json = Ext.encode(Ext.data.OrderStore);
+                                    console.log(Ext.encode(Ext.data.OrderStore));
+                                    // console.log(Ext.encode(resp.responseText), true);
+
+                                    //  str.split([separator][, limit]),
+                                    var jsonData = JSON.parse(json);
+                                    var splits = jsonData.split(" ", 3);
+
+                                    for (var i = 0; i < jsonData.counters.length; i++) {
+                                        var counter = jsonData.counters[i];
+                                        console.log(counter.item_name);
+                                    }
+
+                                    //console.log(splits);
+
+                                },
+                                failure: function(resp, opts) {
+
+
+                                },
+                                callback: function(options, success, resp) {}
+                            });
+                        },
+                        change: {
+                            fn: function(combo, value) {
+
+
+                                var v = combo.getValue();
+                                var record = combo.findRecord(combo.valueField || combo.displayField, v);
+                                var index = combo.store.indexOf(record);
+
+
+                                var row = OrderGrid.getSelectionModel().getSelection()[0];
+                                row.set('item_name', combo.getRawValue())
+                                row.set('item_id', OrderGrid.getStore().getAt(index).data.id)
+
+                                console.log(combo.getRawValue());
+                                Ext.Msg.alert("select item");
+
+
+                                /*  str = "http://192.168.0.104:81/itemdes_list";
+                                str.value = str.split(",", 3);
+                                console.log(str.value);*/
+
+
+                            },
+
+                            select: function(combo, record, index) {
+                                alert(combo.getValue());
+
+                            }
+
+                        },
+
+
+                    }
+                },
+
+
+
+            },
+
+            /* {
+                header: 'Item Description',
+                dataIndex: 'item_description',
+                width: 30,
+                flex: 1,
+                field: {
+                    xtype: 'combobox',
+                    typeAhead: true,
+                    triggerAction: 'all',
+                    selectOnTab: true,
+
+                    displayField: 'item_description',
+                    valueField: 'item_description',
+
+
+                    store: {
+                        fields: ['item_description', 'id'],
+                        proxy: {
+                            type: 'ajax',
+                            url: 'http://192.168.0.104:81/item_description_list'
+                        },
+                    },
+
+
+                    lazyRender: true,
+                    listClass: 'x-combo-list-small',
+                    listeners: {
+                        change: {
+                            fn: function(combo, value) {
+
+
+                                var v = combo.getValue();
+                                var record = combo.findRecord(combo.valueField || combo.displayField, v);
+                                var index = combo.store.indexOf(record);
+
+
+                                var row = OrderGrid.getSelectionModel().getSelection()[0];
+                                row.set('item_description', combo.getRawValue())
+                                row.set('item_type_id', OrderGrid.getStore().getAt(index).data.id)
+
+                                console.log(combo.getRawValue())
+
+                            }
+                        }
+                    }
+                },*/
+
+            {
+                header: 'Item Description',
+                dataIndex: 'item_description',
+                width: 230,
+                flex: 1,
+                //hidden: true,
+
+                editor: {
+                    // defaults to textfield if no xtype is supplied
+                    allowBlank: false
+                },
+
+
+
+            }, {
+                header: 'QTY / PCS',
+                dataIndex: 'Qty_pcs',
+                width: 230,
+                flex: 1,
+
+                editor: {
+                    // defaults to textfield if no xtype is supplied
+                    allowBlank: false
+                },
+
+
+
+            },
+
+            {
+                header: 'Color',
+                dataIndex: 'color',
+                width: 230,
+                flex: 1,
+
+                editor: {
+                    // defaults to textfield if no xtype is supplied
+                    allowBlank: false
+                },
+
+
+
+            },
+
+            {
+                header: 'Qty',
+                dataIndex: 'qty',
+                width: 230,
+                flex: 1,
+
+                editor: {
+                    // defaults to textfield if no xtype is supplied
+                    allowBlank: false
+                },
+
+
+
+            }, {
+                header: 'Supplier',
+                dataIndex: 'supplier',
+                width: 230,
+                flex: 1,
+
+                editor: {
+                    // defaults to textfield if no xtype is supplied
+                    allowBlank: false
+                },
+
+
+
+            }, {
+                header: 'Extra',
+                dataIndex: 'extra',
+                width: 230,
+                flex: 1,
+
+                editor: {
+                    // defaults to textfield if no xtype is supplied
+                    allowBlank: false
+                },
+
+
+
+            }
+
+        ],
+
+        selModel: {
+            selType: 'cellmodel'
+        },
+
+
+
+
+        //selType: 'rowmodel',
+
+        /*
+        plugins: [
+            Ext.create('Ext.grid.plugin.RowEditing', {
+                clicksToEdit: 1
+            })
+        ],*/
+
+
+
+        buttons: [{
+            text: 'Save',
+            handler: function() {
+
+                storePuck();
+
+                //Ext.MessageBox.alert('Save', 'Save editing');
+                //    console.log(storePuck);
+
+            }
+        }, {
+            text: 'Reload Store',
+            handler: function() {
+                OrderGrid.getStore().load();
+
+
+
+                Ext.MessageBox.alert('Message', 'Updated Store');
+            }
+        }]
+
+    });
+
+
+
+
+    OrderItemView = Ext.create('Ext.window.Window', {
+        title: 'Order Item List',
+        height: 400,
+        width: 800,
+        x: 500,
+        layout: 'fit',
+        /*region: 'west',
+        
+
+        collapsible: true,
+        animCollapse: true,
+        maximizable: true,
+        minimizable: true,
+        closeAction: 'show',*/
+
+
+        resizable: true,
+
+        items: [
+            OrderGrid
+        ],
+
+    }).show();

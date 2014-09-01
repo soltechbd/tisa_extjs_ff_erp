@@ -2,18 +2,34 @@ var rowEditing;
 var grid
 var fm = Ext.form;
 
-function item_manager() {
 
 
-    ITEM_MANAGER_WINDOW();
+function item_show() {
+
+
+    SHOWALL();
 
 }
 
-function ITEM_MANAGER_SHOW() {
+
+
+
+function SHOW_item_type() {
 
     allItemShow.show();
 }
 
+/*
+var grid;
+var getStore();
+
+grid.getStore().reload({
+    callback: function() {
+        grid.getView().refresh();
+    }
+});
+
+*/
 
 
 function doMin() {
@@ -24,10 +40,10 @@ function doMin() {
 
 /* === window for item === */
 
-function ITEM_MANAGER_WINDOW() {
+function SHOWALL() {
 
 
-    Ext.define('ItemManager', {
+    Ext.define('MyApp.model.Mark', {
         extend: 'Ext.data.Model',
         fields: [{
             name: 'id',
@@ -40,20 +56,16 @@ function ITEM_MANAGER_WINDOW() {
             type: 'string'
         }, {
             name: 'item_type_name',
-            type: 'string',
-            mapping: 'typeItem.name'
+            type: 'string'
         }, {
             name: 'unit_type_name',
-            type: 'string',
-            mapping: 'typeUnit.name'
+            type: 'string'
         }, {
             name: 'color_type_name',
-            type: 'string',
-            mapping: 'typeColor.name'
+            type: 'string'
         }, {
             name: 'supplier_name',
-            type: 'string',
-            mapping: 'supplier.name'
+            type: 'string'
         }, {
             name: 'item_comment',
             type: 'string'
@@ -61,6 +73,29 @@ function ITEM_MANAGER_WINDOW() {
     });
 
 
+    Ext.define('MyApp.store.Marks', {
+        extend: 'Ext.data.Store',
+
+        //best to require the model if you  put it in separate files
+        requires: ['MyApp.model.Mark'],
+        model: 'MyApp.model.Mark',
+        storeId: 'markStore',
+        proxy: {
+            type: 'memory',
+            reader: {
+                type: 'json',
+                root: 'items'
+            }
+        }
+    });
+
+
+    /* 
+    var rowEditing = Ext.create('Ext.grid.plugin.RowEditing', {
+        clicksToMoveEditor: 1,
+        autoCancel: false
+    });
+    */
 
     var cellEditing = Ext.create('Ext.grid.plugin.CellEditing', {
         clicksToEdit: 1,
@@ -69,7 +104,7 @@ function ITEM_MANAGER_WINDOW() {
 
 
     grid = Ext.create('Ext.grid.Panel', {
-        itemId: 'AllItemGrid',
+        itemId: 'markGrid',
         store: {
             proxy: {
                 type: 'ajax',
@@ -77,9 +112,8 @@ function ITEM_MANAGER_WINDOW() {
             },
             autoLoad: true,
             autoSync: true,
-            // requires: ['ItemManager'],
-            model: 'ItemManager',
-            id: 'ItemStore'
+            // requires: ['MyApp.model.Mark'],
+            model: 'MyApp.model.Mark',
         },
 
 
@@ -113,7 +147,7 @@ function ITEM_MANAGER_WINDOW() {
             editor: {
 
                 allowBlank: false
-            }
+            },
 
 
 
@@ -126,7 +160,7 @@ function ITEM_MANAGER_WINDOW() {
             editor: {
 
                 allowBlank: false
-            }
+            },
 
 
         }, {
@@ -140,16 +174,16 @@ function ITEM_MANAGER_WINDOW() {
                 triggerAction: 'all',
                 selectOnTab: true,
 
-                displayField: 'name',
-                valueField: 'name',
+                displayField: 'item_type_name',
+                valueField: 'item_type_name',
 
 
                 store: {
-                    fields: ['id', 'name', 'comment'],
+                    fields: ['item_type_name', 'id', 'comment'],
                     proxy: {
                         type: 'ajax',
                         url: 'http://' + NodeJsHost + '/item_type_input'
-                    }
+                    },
                 },
 
 
@@ -159,19 +193,22 @@ function ITEM_MANAGER_WINDOW() {
                     change: {
                         fn: function(combo, value) {
 
+
                             var v = combo.getValue();
                             var record = combo.findRecord(combo.valueField || combo.displayField, v);
                             var index = combo.store.indexOf(record);
 
-                            var row = grid.getSelectionModel().getSelection()[0];
 
-                            grid.getSelectionModel().getSelection()[0].data.typeItem.id = combo.store.getAt(index).data.id
-                            grid.getSelectionModel().getSelection()[0].data.typeItem.name = combo.getRawValue()
+                            var row = grid.getSelectionModel().getSelection()[0];
+                            row.set('item_type_name', combo.getRawValue())
+                            row.set('item_type_id', grid.getStore().getAt(index).data.id)
+
+                            console.log(combo.getRawValue())
 
                         }
                     }
                 }
-            }
+            },
 
 
 
@@ -192,18 +229,18 @@ function ITEM_MANAGER_WINDOW() {
                 triggerAction: 'all',
                 selectOnTab: true,
 
-                displayField: 'name',
-                valueField: 'name',
+                displayField: 'unit_type_name',
+                valueField: 'unit_type_name',
 
 
                 store: {
-                    fields: ['id', 'name', 'comment'],
+                    fields: ['id', 'unit_type_name', 'comment'],
                     proxy: {
                         type: 'ajax',
                         url: 'http://' + NodeJsHost + '/unit-input'
                     },
                     autoLoad: true,
-                    autoSync: true
+                    autoSync: true,
                 },
 
 
@@ -218,19 +255,23 @@ function ITEM_MANAGER_WINDOW() {
                             var record = combo.findRecord(combo.valueField || combo.displayField, v);
                             var index = combo.store.indexOf(record);
 
-                            var row = grid.getSelectionModel().getSelection()[0];
 
-                            grid.getSelectionModel().getSelection()[0].data.typeUnit.id = combo.store.getAt(index).data.id
-                            grid.getSelectionModel().getSelection()[0].data.typeUnit.name = combo.getRawValue()
+                            var row = grid.getSelectionModel().getSelection()[0];
+                            row.set('unit_type_name', combo.getRawValue())
+                            row.set('unit_type_id', grid.getStore().getAt(index).data.id)
+
+                            console.log(combo.getRawValue())
 
                         }
                     }
                 }
-            }
+            },
 
         }, {
             header: 'Item Color',
             dataIndex: 'color_type_name',
+
+
             selectOnFocus: true,
             triggerAction: 'all',
 
@@ -243,18 +284,18 @@ function ITEM_MANAGER_WINDOW() {
                 triggerAction: 'all',
                 selectOnTab: true,
 
-                displayField: 'name',
-                valueField: 'name',
+                displayField: 'color_type_name',
+                valueField: 'color_type_name',
 
 
                 store: {
-                    fields: ['id', 'name', 'comment'],
+                    fields: ['id', 'color_type_name', 'comment'],
                     proxy: {
                         type: 'ajax',
                         url: 'http://' + NodeJsHost + '/color_type_input'
                     },
                     autoLoad: true,
-                    autoSync: true
+                    autoSync: true,
                 },
 
 
@@ -269,15 +310,17 @@ function ITEM_MANAGER_WINDOW() {
                             var record = combo.findRecord(combo.valueField || combo.displayField, v);
                             var index = combo.store.indexOf(record);
 
-                            var row = grid.getSelectionModel().getSelection()[0];
 
-                            grid.getSelectionModel().getSelection()[0].data.typeColor.id = combo.store.getAt(index).data.id
-                            grid.getSelectionModel().getSelection()[0].data.typeColor.name = combo.getRawValue()
+                            var row = grid.getSelectionModel().getSelection()[0];
+                            row.set('color_type_name', combo.getRawValue())
+                            row.set('color_type_id', grid.getStore().getAt(index).data.id)
+
+                            console.log(combo.getRawValue())
 
                         }
                     }
                 }
-            }
+            },
 
         }, {
             header: 'Item Supplier',
@@ -296,18 +339,18 @@ function ITEM_MANAGER_WINDOW() {
                 triggerAction: 'all',
                 selectOnTab: true,
 
-                displayField: 'name',
-                valueField: 'name',
+                displayField: 'supplier_name',
+                valueField: 'supplier_name',
 
 
                 store: {
-                    fields: ['id', 'name', 'comment'],
+                    fields: ['id', 'supplier_name', 'comment'],
                     proxy: {
                         type: 'ajax',
                         url: 'http://' + NodeJsHost + '/supplier_input'
                     },
                     autoLoad: true,
-                    autoSync: true
+                    autoSync: true,
                 },
 
 
@@ -322,10 +365,12 @@ function ITEM_MANAGER_WINDOW() {
                             var record = combo.findRecord(combo.valueField || combo.displayField, v);
                             var index = combo.store.indexOf(record);
 
-                            var row = grid.getSelectionModel().getSelection()[0];
 
-                            grid.getSelectionModel().getSelection()[0].data.supplier.id = combo.store.getAt(index).data.id
-                            grid.getSelectionModel().getSelection()[0].data.supplier.name = combo.getRawValue()
+                            var row = grid.getSelectionModel().getSelection()[0];
+                            row.set('supplier_name', combo.getRawValue())
+                            row.set('supplier_id', grid.getStore().getAt(index).data.id)
+
+                            console.log(combo.getRawValue())
 
                         }
                     }
@@ -347,13 +392,27 @@ function ITEM_MANAGER_WINDOW() {
         },
 
 
+
+
+        //selType: 'rowmodel',
+
+        /*
+        plugins: [
+            Ext.create('Ext.grid.plugin.RowEditing', {
+                clicksToEdit: 1
+            })
+        ],*/
+
+
+
         buttons: [{
             text: 'Save',
             handler: function() {
 
-                ItemStorePuck();
+                storePuck();
 
-                Ext.MessageBox.alert('Save', 'Save Data');
+                //Ext.MessageBox.alert('Save', 'Save editing');
+                //    console.log(storePuck);
 
             }
         }, {
@@ -369,9 +428,24 @@ function ITEM_MANAGER_WINDOW() {
 
     });
 
+    //handler: {
+
+    var task = {
+        run: function() {
+            markStore.load();
+        },
+        interval: 100
+    }
+    //  }
+
+
+    // This will reload your store every 5 mseconds
+    Ext.TaskManager.start(task);
+
 
     allItemShow = Ext.create('Ext.window.Window', {
-        title: 'Item Manager',
+        title: 'All Items',
+        //align: 'center',
         height: 400,
         width: 900,
         layout: 'fit',
@@ -387,22 +461,31 @@ function ITEM_MANAGER_WINDOW() {
 
         items: [
             grid
-        ]
+        ],
 
+        handler: function() {
+            //refresh source grid
+            //gridStore.loadData(markStore);
+
+
+
+        }
 
     });
 
     allItemShow.on('minimize', doMin, allItemShow);
 
+
+
 }
 
 
-function ItemStorePuck() {
+function storePuck() {
 
     var json = {}
 
     var json = Ext.encode(Ext.pluck(grid.getStore().data.items, 'data'));
-    console.log(JSON.parse(Ext.encode(Ext.pluck(grid.getStore().data.items, 'data'))));
+    console.log(Ext.encode(Ext.pluck(grid.getStore().data.items, 'data')));
 
     socket.emit('all_store_item', json);
 
